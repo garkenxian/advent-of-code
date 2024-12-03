@@ -4,6 +4,26 @@ param(
 
 $fnPart = if ($TestMode) {"test2"} else {"full"}
 $content = Get-Content "./data/day1-${fnPart}.txt"
+<# 
+
+had to get help on this one, apparently when replacing you have to account 
+for eighthree being both 8 and 3, initially i was replacing "eight" with 8 and 
+then it would be 8hree and not replace the 3.  At first i thought that was the point
+but guess not.  The description was not very clear on this however.
+
+I blame the product manager ;)
+
+So instead of replacing "one" with "1", it replaces "one" with "o1e" and keeps the 
+last letter overlap intact
+
+so in the case of "eighthree" it replaces eight with "e8t" making the string to be 
+"e8three" and then replaces "three" with "t3e" so final string is "e8t3e"
+
+in the example of "eighthreeight" the final will be "e8t3e8t" and finally filtered to 838 then 88
+
+Good luck
+
+#>
 $replaceArray = [ordered]@{
   "one"   = "o1e"
   "two"   = "t2o"
