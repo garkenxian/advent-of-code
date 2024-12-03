@@ -3,7 +3,7 @@ param(
 )
 
 $fnPart = if ($TestMode) {"test"} else {"full"}
-$content = Get-Content "./data/day1-${fnPart}.txt"
+$content = Get-Content "./${fnPart}.txt"
 
 $answer = 0
 
