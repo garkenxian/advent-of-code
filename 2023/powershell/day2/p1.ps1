@@ -3,7 +3,7 @@ param(
 )
 
 $fnPart = if ($TestMode) {"test"} else {"full"}
-$content = Get-Content "./${fnPart}.txt"
+$content = Get-Content "./_${fnPart}.txt"
 
 <#
   determine if the game was possible if there was only 
