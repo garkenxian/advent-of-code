@@ -47,13 +47,12 @@ $content | `
   } | `
   ForEach-Object {
     ## calculate the min needed
-    $game = $_.PSObject.Copy()
 
-    $game.gameMin.red   = ($game.games.red   | Measure-Object -Maximum).Maximum
-    $game.gameMin.green = ($game.games.green | Measure-Object -Maximum).Maximum
-    $game.gameMin.blue  = ($game.games.blue  | Measure-Object -Maximum).Maximum
+    $_.gameMin.red   = ($_.games.red   | Measure-Object -Maximum).Maximum
+    $_.gameMin.green = ($_.games.green | Measure-Object -Maximum).Maximum
+    $_.gameMin.blue  = ($_.games.blue  | Measure-Object -Maximum).Maximum
 
-    return $game
+    return $_
   } | `
   ForEach-Object {
     ## get power and answer
