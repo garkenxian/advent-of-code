@@ -80,7 +80,7 @@ for($w = 0; $w -lt $width; $w++){
   $log += "`n"
 }
 
-$log | Set-Content "./logs/${fnPart}.map.log" 
+$log | Set-Content "./logs/p1.${fnPart}.map.log" 
 
 
 $total = 0;
@@ -90,6 +90,6 @@ $numStringArray | ForEach-Object {
   $log += "${_} | ${total} `n"
 }
 
-$log | Set-Content "./logs/${fnPart}.partNumbers.log" 
+$log | Set-Content "./logs/p1.${fnPart}.partNumbers.log" 
 
 $total
