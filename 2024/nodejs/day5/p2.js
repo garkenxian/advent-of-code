@@ -131,20 +131,18 @@ fs.readFile(fn, "utf-8", (err, data) => {
         u.isValid = isUpdateValid(u.update);
     });
 
+    // fixing the broken updates
+    let limit = updates.filter(u => !u.isValid).length;
+    let counter = 0;
     updates.filter(u => !u.isValid).forEach(u => {
         // not valid, 
+        counter++;
+        console.log(`Fixing Broken Record ${counter} of ${limit}`);
         u.fixed = fixUpdates(u.update);
     });
 
     let total = 0;
-    let limit = updates.filter(u => !u.isValid).length;
-    let counter = 0;
     updates.filter(u => !u.isValid).forEach(u => {
-        // get the middle value
-        counter++;
-
-        console.log(`Fixing Broken Record ${counter} of ${limit}`);
-
         let mi = Math.floor(u.update.length / 2)
         total += u.fixed[mi];
     });
