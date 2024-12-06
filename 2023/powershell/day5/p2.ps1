@@ -5,7 +5,6 @@ function Find-InMap{
     )
 
     $result = $Source
-
     for ($i = 0; $i -lt $Map.Count; $i++){
         $sourceStart, $destStart, $range = $Map[$i]       
         if (($Source -ge $sourceStart) -and ($Source -lt ($sourceStart + $range))){
@@ -19,10 +18,10 @@ function Find-InMap{
     return $result
 }
 
-$fn = "./data/full.txt"
+$fn = "./data/test.txt"
 $almanac = Get-Content $fn
 $currentMapLabel = ""
-$seeds = @{}
+$seeds = @()
 $map = @{}
 
 $almanac | ForEach-Object {
@@ -33,29 +32,11 @@ $almanac | ForEach-Object {
                 $currentMapLabel = "SEEDS"
                 Write-Host "Found Seeds"
 
-                $baseObj = @{
-                    soil     = [int64]0
-                    fertizer = [int64]0
-                    water    = [int64]0
-                    light    = [int64]0
-                    temp     = [int64]0
-                    humidity = [int64]0
-                    location = [int64]0
-            
-                }
+                
                 $seedRangesRaw = $_.Split(":")[1].Trim().Split(" ")
-                $seedRanges = @()
                 for ($i = 0; $i -lt $seedRangesRaw.Count; $i = $i + 2){
-                    $seedRanges += , @(($seedRangesRaw[$i] -as [int64]), ($seedRangesRaw[$i + 1] -as [int64]))
+                    $seeds += , @(($seedRangesRaw[$i] -as [int64]), ($seedRangesRaw[$i + 1] -as [int64]))
                 }
-
-                $seedRanges | `
-                    ForEach-Object {
-                        for($r = 0; $r -lt $_[1]; $r++){
-                            $seeds.Add($_[0] + $r , $baseObj.PsObject.Copy())
-                        }
-                        
-                    }
                 break
             }
         { $_.EndsWith(":")} 
@@ -89,22 +70,22 @@ $almanac | ForEach-Object {
 ## get the lowest location
 $location = [int]::MaxValue
 
-## generate seed map
-$seeds.Keys | `
-    ForEach-Object {
-        $seed          = $seeds[$_]
-        $seed.soil     = Find-InMap -Map $map["seed-to-soil map:"]              -Source $_
-        $seed.fertizer = Find-InMap -Map $map["soil-to-fertilizer map:"]        -Source $seed.soil
-        $seed.water    = Find-InMap -Map $map["fertilizer-to-water map:"]       -Source $seed.fertizer
-        $seed.light    = Find-InMap -Map $map["water-to-light map:"]            -Source $seed.water
-        $seed.temp     = Find-InMap -Map $map["light-to-temperature map:"]      -Source $seed.light
-        $seed.humidity = Find-InMap -Map $map["temperature-to-humidity map:"]   -Source $seed.temp
-        $seed.location = Find-InMap -Map $map["humidity-to-location map:"]      -Source $seed.humidity
+# ## generate seed map
+# $seeds.Keys | `
+#     ForEach-Object {
+#         $seed          = $seeds[$_]
+#         $seed.soil     = Find-InMap -Map $map["seed-to-soil map:"]              -Source $_
+#         $seed.fertizer = Find-InMap -Map $map["soil-to-fertilizer map:"]        -Source $seed.soil
+#         $seed.water    = Find-InMap -Map $map["fertilizer-to-water map:"]       -Source $seed.fertizer
+#         $seed.light    = Find-InMap -Map $map["water-to-light map:"]            -Source $seed.water
+#         $seed.temp     = Find-InMap -Map $map["light-to-temperature map:"]      -Source $seed.light
+#         $seed.humidity = Find-InMap -Map $map["temperature-to-humidity map:"]   -Source $seed.temp
+#         $seed.location = Find-InMap -Map $map["humidity-to-location map:"]      -Source $seed.humidity
 
-        if ($seed.location -lt $location){
-            Write-Host "Location $($seed.location) is closer than ${location}"
-            $location = $seed.location
-        }
-    }
+#         if ($seed.location -lt $location){
+#             Write-Host "Location $($seed.location) is closer than ${location}"
+#             $location = $seed.location
+#         }
+#     }
 
 $location

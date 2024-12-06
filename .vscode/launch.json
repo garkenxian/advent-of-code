@@ -5,13 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "PowerShell Attach to Host Process",
+            "type": "PowerShell",
+            "request": "attach"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\2024\\nodejs\\day5\\p2.js"
+            "program": "${workspaceFolder}\\2024\\nodejs\\day6\\p2.js"
         }
     ]
 }
