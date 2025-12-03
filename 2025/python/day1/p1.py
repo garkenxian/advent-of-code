@@ -1,7 +1,7 @@
 import os
 import operator
 
-test_mode = False
+test_mode = True
 
 fn = "p1_test.txt" if test_mode else "p1_input.txt"
 
