@@ -1,5 +1,12 @@
 # Advent of Code Challenge
 
+## 2025
+https://adventofcode.com/2025
+Dear Santa... can i finish this year?  There's only 12 challenges, how hard can this be? 
+I'm going to try this year in python.  If I complete, then I will attempt in java.  I am just learning it so perhaps if know the solutions I can learn the language.  
+
+Lets see.
+
 ## 2024
 https://adventofcode.com/2024
 
